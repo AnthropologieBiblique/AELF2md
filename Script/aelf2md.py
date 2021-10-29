@@ -221,7 +221,7 @@ class BibleChapter:
 			os.mkdir(path)
 		except FileExistsError:
 			pass
-		f = open(path+'/'+name+'.md', 'w')
+		f = open(path+'/'+name.strip()+'.md', 'w')
 		f.write('---'+'\n')
 		f.write('aliases : '+'\n')
 		f.write('- '+bookName+' '+self.number+'\n')
@@ -246,7 +246,7 @@ class BibleVerse:
 		self.sub_number = sub_number
 		self.verseText = verseText
 
-aelf = Bible("Bible AELF","AELF",False,"français")
-#ref = Bible("Bible AELF","",False,"français")
+#aelf = Bible("Bible AELF","AELF",False,"français")
+ref = Bible("Bible AELF","",False,"français")
 
 
