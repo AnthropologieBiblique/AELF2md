@@ -1,0 +1,24 @@
+---
+aliases : 
+- Psaumes 42 (43)
+- Psaumes 43 (42)
+- Ps 43 (42)
+- Psalms 43 (42)
+tags : 
+- Bible/Ps/43_42
+- français
+cssclass : français
+---
+
+# Psaumes 42 (43)
+
+###### 01
+Rends-moi justice, ô mon Dieu, défends ma cause contre un peuple sans foi ; * de l'homme qui ruse et trahit, libère-moi.
+###### 02
+C'est toi, Dieu, ma forteresse : pourquoi me rejeter ? * Pourquoi vais-je assombri, pressé par l'ennemi ?
+###### 03
+Envoie ta lumière et ta vérité : qu'elles guident mes pas * et me conduisent à ta montagne sainte, jusqu'en ta demeure.
+###### 04
+J'avancerai jusqu'à l'autel de Dieu, vers Dieu qui est toute ma joie ; * je te rendrai grâce avec ma harpe, Dieu, mon Dieu !
+###### 05
+R / Pourquoi te désoler, ô mon âme, et gémir sur moi ? * Espère en Dieu ! De nouveau je rendrai grâce : il est mon sauveur et mon Dieu !

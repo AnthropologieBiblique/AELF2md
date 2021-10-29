@@ -1,0 +1,86 @@
+01O	Genèse
+02O	Exode
+03O	Lévitique
+04O	Nombres
+05O	Deutéronome
+06O	Josué
+07O	Juges
+08O	Ruth
+09O	1 Samuel
+10O	2 Samuel
+11O	1 Rois
+12O	2 Rois
+13O	1 Chroniques
+14O	2 Chroniques
+15O	Esdras
+16O	Néhémie
+17O	Esther
+18O	Job
+19O	Psaumes
+20O	Proverbes
+21O	Ecclésiaste
+22O	Cantique des cantiques
+23O	Isaïe
+24O	Jérémie
+25O	Lamentations
+26O	Ézéchiel
+27O	Daniel
+28O	Osée
+29O	Joël
+30O	Amos
+31O	Abdias
+32O	Jonas
+33O	Michée
+34O	Nahum
+35O	Habaquq
+36O	Sophonie
+37O	Aggée
+38O	Zacharie
+39O	Malachie
+40N	Matthieu
+41N	Marc
+42N	Luc
+43N	Jean
+44N	Actes
+45N	Romains
+46N	1 Corinthiens
+47N	2 Corinthiens
+48N	Galates
+49N	Éphésiens
+50N	Philippiens
+51N	Colossiens
+52N	1 Thessaloniciens
+53N	2 Thessaloniciens
+54N	1 Timothée
+55N	2 Timothée
+56N	Tite
+57N	Philémon
+58N	Hébreux
+59N	Jacques
+60N	1 Pierre
+61N	2 Pierre
+62N	1 Jean
+63N	2 Jean
+64N	3 Jean
+65N	Jude
+66N	Apocalypse
+67A	Tobie
+68A	Judith
+69A	Esther, Grec
+70A	Sagesse
+71A	Siracide
+72A	Baruch
+73A	Épître de Jérémie
+74A	Daniel
+75A	Suzanne
+76A	Bel et le dragon
+77A	1 Maccabees
+78A	2 Maccabees
+79A	3 Maccabees
+80A	4 Maccabees
+81A	1 Esdras
+82A	2 Esdras
+83A	Prière de Manassé
+84A	Psaume 151
+85A	Psaume extra numerum
+86A	Odes

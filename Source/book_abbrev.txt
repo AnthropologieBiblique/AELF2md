@@ -1,0 +1,86 @@
+01O	Gn
+02O	Ex
+03O	Lv
+04O	Nb
+05O	Dt
+06O	Jos
+07O	Jg
+08O	Rt
+09O	1 S
+10O	2 S
+11O	1 R
+12O	2 R
+13O	1 Ch
+14O	2 Ch
+15O	Esd
+16O	Ne
+17O	Est
+18O	Jb
+19O	Ps
+20O	Pr
+21O	Qo
+22O	Ct
+23O	Is
+24O	Jr
+25O	Lm
+26O	Ez
+27O	Dn
+28O	Os
+29O	Jl
+30O	Am
+31O	Ab
+32O	Jon
+33O	Mi
+34O	Na
+35O	Ha
+36O	So
+37O	Ag
+38O	Za
+39O	Ml
+40N	Mt
+41N	Mc
+42N	Lc
+43N	Jn
+44N	Ac
+45N	Rm
+46N	1 Co
+47N	2 Co
+48N	Ga
+49N	Ep
+50N	Ph
+51N	Col
+52N	1 Th
+53N	2 Th
+54N	1 Tm
+55N	2 Tm
+56N	Tt
+57N	Phm
+58N	He
+59N	Jc
+60N	1 P
+61N	2 P
+62N	1 Jn
+63N	2 Jn
+64N	3 Jn
+65N	Jude
+66N	Ap
+67A	Tb
+68A	Jdt
+69A	Estgrec
+70A	Sg
+71A	Si
+72A	Ba
+73A	Jr
+74A	Dngrec
+75A	Suz
+76A	Bel
+77A	1 M
+78A	2 M
+79A	3 M
+80A	4 M
+81A	1 Esd
+82A	2 Esd
+83A	Man
+84A	Ps 151
+85A	Ps Sal
+86A	Od
