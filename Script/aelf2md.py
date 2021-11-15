@@ -99,7 +99,7 @@ class Bible:
 			os.mkdir(path)
 		except FileExistsError:
 			pass
-		f = open(path+'/'+self.abbrev+'.md', 'w')
+		f = open(path+'/'+'Ref.md', 'w')
 		f.write('---'+'\n')
 		f.write('tags : '+'Bible'+', '+self.language+'\n')
 		f.write('cssclass : '+self.language+'\n')
@@ -107,7 +107,7 @@ class Bible:
 		f.write('# '+self.name+'\n\n')
 		for book in self.booksList:
 			book.buildMdBible(self.abbrev,path)
-			f.write('[['+self.abbrev+' '+book.abbrev+'|'+book.name+']]'+'\n')
+			f.write('[['+book.abbrev+'|'+book.name+']]'+'\n')
 		f.close()
 
 class BibleBook:
@@ -123,7 +123,7 @@ class BibleBook:
 	def addChapter(self,chapter):
 		self.chapterList.append(chapter)
 	def buildMdBible(self,bibleAbbrev,path):
-		name = bibleAbbrev+' '+self.standardAbbrev
+		name = self.standardAbbrev
 		path += '/Livres'
 		try:
 			os.mkdir(path)
@@ -224,7 +224,7 @@ class BibleChapter:
 		f = open(path+'/'+name.strip()+'.md', 'w')
 		f.write('---'+'\n')
 		f.write('aliases : '+'\n')
-		f.write('- '+bookName+' '+self.number+'\n')
+		#f.write('- '+bookName+' '+self.number+'\n')
 		f.write('- '+bookStandardName+' '+self.standard_number+'\n')
 		f.write('- '+bookStandardAbbrev+' '+self.standard_number+'\n')
 		if bookStandardName != bookEnglishName:
