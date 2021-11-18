@@ -146,7 +146,7 @@ class BibleBook:
 		path+='/'+self.name
 		for chapter in self.chapterList:
 			chapter.buildMdBible(bibleAbbrev,self.name,self.abbrev,self.standardName,self.standardAbbrev,self.englishName,path)
-			f.write('[['+name+' '+chapter.number+'|'+self.name+' '+chapter.number+']]'+'\n')
+			f.write('[['+name+' '+chapter.standard_number+'|'+self.name+' '+chapter.number+']]'+'\n')
 		f.close()
 
 class BibleChapter:
@@ -158,14 +158,14 @@ class BibleChapter:
 			if hebraic:
 				if number != hebraicPsTable[number]:
 					self.number = number+' ('+hebraicPsTable[number]+')'
-					self.standard_number = self.number
+					self.standard_number = number
 				else:
 					self.number = number
 					self.standard_number = standard_number
 			else:
 				if number != lxxPsTable[number]:
-					self.number = number+' ('+lxxPsTable[number]+')'
-					self.standard_number = lxxPsTable[number]+' ('+number+')'
+					self.number = '('+lxxPsTable[number]+') '+number
+					self.standard_number = lxxPsTable[number]
 				else:
 					self.number = number
 					self.standard_number = standard_number
@@ -205,7 +205,11 @@ class BibleChapter:
 		for data in soup.find_all():
 			if data.name == "p":
 				if data.attrs == {}:
-					verse = BibleVerse(data.contents[0].getText(),'',data.contents[1].strip())
+					indiceVerset = re.compile(r'(([1-9]\S{0,3})|00)')
+					verseNumber = indiceVerset.search(data.contents[0].getText()).group(1)
+					if verseNumber=="00":
+						verseNumber="0"
+					verse = BibleVerse(verseNumber,'',data.contents[1].strip())
 					self.addVerse(verse)
 
 	def cleanTag(self,string):
@@ -216,7 +220,10 @@ class BibleChapter:
 	def addVerse(self,verse):
 		self.verseList.append(verse)
 	def buildMdBible(self,bibleAbbrev,bookName,bookAbbrev,bookStandardName,bookStandardAbbrev,bookEnglishName,path):
-		name = bibleAbbrev +' '+bookAbbrev+' '+self.number
+		if bookStandardAbbrev == 'Ps':
+			name = bibleAbbrev +' '+bookAbbrev+' '+self.standard_number
+		else:
+			name = bibleAbbrev +' '+bookAbbrev+' '+self.number
 		try:
 			os.mkdir(path)
 		except FileExistsError:
