@@ -1,0 +1,3 @@
+[submodule "Bible/AELF"]
+	path = Bible/AELF
+	url = https://github.com/AnthropologieBiblique/AELF
