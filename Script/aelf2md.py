@@ -96,7 +96,7 @@ class Bible:
 				self.addBook(book)
 
 	def buildMdBible(self):
-		path = '../Bible/'+self.abbrev
+		path = '../Bible/AELF/'+self.abbrev
 		print(path)
 		pathlib.Path(path).mkdir(parents=True, exist_ok=True)
 		f = open(path+'/'+'Ref.md', 'w')
@@ -249,7 +249,7 @@ class BibleVerse:
 		self.sub_number = sub_number
 		self.verseText = verseText
 
-aelf = Bible("Bible AELF","AELF",False,"français","ltr")
-#ref = Bible("Bible AELF","",False,"français","ltr")
+#aelf = Bible("Bible AELF","AELF",False,"français","ltr")
+ref = Bible("Bible AELF","",False,"français","ltr")
 
 
