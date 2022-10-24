@@ -6,9 +6,10 @@ import urllib.parse
 import urllib.request
 import re
 import fileinput
+import pathlib
 
 class Bible:
-	def __init__(self,name,abbrev,hebraic,language):
+	def __init__(self,name,abbrev,hebraic,language,direction):
 		self.name = name
 		self.abbrev = abbrev
 		self.hebraic = hebraic
@@ -22,6 +23,7 @@ class Bible:
 		self.lxxPsTable = {}
 		self.indicePsTable = {}
 		self.booksList = []
+		self.direction = direction
 		self.createBooksNames()
 		self.createBooksAbbrev()
 		self.createBooksStandardNames()
@@ -81,37 +83,36 @@ class Bible:
 					self.booksStandardNames[bookStandardRef],
 					self.booksStandardAbbrev[bookStandardRef],
 					self.booksEnglishNames[bookStandardRef],
-					self.language)
+					self.language,
+					self.direction)
 				for i in range(int(row[2]),int(row[3])+1):
 					print(i)
 					chapterRef = str(i)
 					chapterStandardRef = chapterRef
 					chapter = BibleChapter(row[1],self.indicePsTable, book.standardAbbrev,
 						self.hebraic,self.hebraicPsTable,self.lxxPsTable,
-						chapterRef,chapterStandardRef,self.language)
+						chapterRef,chapterStandardRef,self.language,self.direction)
 					book.addChapter(chapter)
 				self.addBook(book)
 
 	def buildMdBible(self):
-		path = '../Bibles/'+self.abbrev
+		path = '../Bible/'+self.abbrev
 		print(path)
-		try:
-			os.mkdir(path)
-		except FileExistsError:
-			pass
-		f = open(path+'/'+self.abbrev+'.md', 'w')
+		pathlib.Path(path).mkdir(parents=True, exist_ok=True)
+		f = open(path+'/'+'Ref.md', 'w')
 		f.write('---'+'\n')
 		f.write('tags : '+'Bible'+', '+self.language+'\n')
 		f.write('cssclass : '+self.language+'\n')
+		f.write('direction : '+self.direction+'\n')
 		f.write('---'+'\n')
 		f.write('# '+self.name+'\n\n')
 		for book in self.booksList:
 			book.buildMdBible(self.abbrev,path)
-			f.write('[['+self.abbrev+' '+book.abbrev+'|'+book.name+']]'+'\n')
+			f.write('[['+book.abbrev+'|'+book.name+']]'+'\n')
 		f.close()
 
 class BibleBook:
-	def __init__(self,name,abbrev,standardName,standardAbbrev,englishName,language):
+	def __init__(self,name,abbrev,standardName,standardAbbrev,englishName,language, direction):
 		self.name = name
 		self.abbrev = abbrev
 		self.standardName = standardName
@@ -120,18 +121,16 @@ class BibleBook:
 		self.language = language
 		self.numberChapters = 0
 		self.chapterList = []
+		self.direction = direction
 	def addChapter(self,chapter):
 		self.chapterList.append(chapter)
 	def buildMdBible(self,bibleAbbrev,path):
-		name = bibleAbbrev+' '+self.standardAbbrev
+		name = self.standardAbbrev
 		path += '/Livres'
-		try:
-			os.mkdir(path)
-		except FileExistsError:
-			pass
+		pathlib.Path(path).mkdir(parents=True, exist_ok=True)
 		f = open(path+'/'+name+'.md', 'w')
 		f.write('---'+'\n')
-		f.write('aliases : '+'\n')
+		f.write('bibleKeys : '+'\n')
 		f.write('- '+self.name+'\n')
 		f.write('- '+self.standardName+'\n')
 		f.write('- '+self.standardAbbrev+'\n')
@@ -141,16 +140,17 @@ class BibleBook:
 		f.write('- '+'Bible/'+self.standardAbbrev.replace(" ", "")+'\n')
 		f.write('- '+self.language+'\n')
 		f.write('cssclass : '+self.language+'\n')
+		f.write('direction : '+self.direction+'\n')
 		f.write('---'+'\n\n')
 		f.write('# '+self.name+'\n\n')
 		path+='/'+self.name
 		for chapter in self.chapterList:
 			chapter.buildMdBible(bibleAbbrev,self.name,self.abbrev,self.standardName,self.standardAbbrev,self.englishName,path)
-			f.write('[['+name+' '+chapter.number+'|'+self.name+' '+chapter.number+']]'+'\n')
+			f.write('[['+name+' '+chapter.standard_number+'|'+self.name+' '+chapter.number+']]'+'\n')
 		f.close()
 
 class BibleChapter:
-	def __init__(self,bookTarget,indicePsTable,bookStandardAbbrev,hebraic,hebraicPsTable,lxxPsTable,number,standard_number,language):
+	def __init__(self,bookTarget,indicePsTable,bookStandardAbbrev,hebraic,hebraicPsTable,lxxPsTable,number,standard_number,language, direction):
 		if bookStandardAbbrev == 'Ps':
 			self.indice = indicePsTable[number]
 			number = hebraicPsTable[number]
@@ -158,14 +158,14 @@ class BibleChapter:
 			if hebraic:
 				if number != hebraicPsTable[number]:
 					self.number = number+' ('+hebraicPsTable[number]+')'
-					self.standard_number = self.number
+					self.standard_number = number
 				else:
 					self.number = number
 					self.standard_number = standard_number
 			else:
 				if number != lxxPsTable[number]:
-					self.number = number+' ('+lxxPsTable[number]+')'
-					self.standard_number = lxxPsTable[number]+' ('+number+')'
+					self.number = '('+lxxPsTable[number]+') '+number
+					self.standard_number = lxxPsTable[number]
 				else:
 					self.number = number
 					self.standard_number = standard_number
@@ -176,13 +176,11 @@ class BibleChapter:
 		self.bookTarget = bookTarget
 		self.language = language
 		self.verseList = []
+		self.direction = direction
 		self.readVerses()
 	def readVerses(self):
 		path = '../Source/html/'+self.bookTarget
-		try:
-			os.mkdir(path)
-		except FileExistsError:
-			pass		
+		pathlib.Path(path).mkdir(parents=True, exist_ok=True)	
 		if os.path.isfile(path+'/'+self.indice+'.html'):
 			pass
 		else:
@@ -205,7 +203,11 @@ class BibleChapter:
 		for data in soup.find_all():
 			if data.name == "p":
 				if data.attrs == {}:
-					verse = BibleVerse(data.contents[0].getText(),'',data.contents[1].strip())
+					indiceVerset = re.compile(r'(([1-9]\S{0,3})|00)')
+					verseNumber = indiceVerset.search(data.contents[0].getText()).group(1)
+					if verseNumber=="00":
+						verseNumber="0"
+					verse = BibleVerse(verseNumber,'',data.contents[1].strip())
 					self.addVerse(verse)
 
 	def cleanTag(self,string):
@@ -216,15 +218,15 @@ class BibleChapter:
 	def addVerse(self,verse):
 		self.verseList.append(verse)
 	def buildMdBible(self,bibleAbbrev,bookName,bookAbbrev,bookStandardName,bookStandardAbbrev,bookEnglishName,path):
-		name = bibleAbbrev +' '+bookAbbrev+' '+self.number
-		try:
-			os.mkdir(path)
-		except FileExistsError:
-			pass
-		f = open(path+'/'+name+'.md', 'w')
+		if bookStandardAbbrev == 'Ps':
+			name = bibleAbbrev +' '+bookAbbrev+' '+self.standard_number
+		else:
+			name = bibleAbbrev +' '+bookAbbrev+' '+self.number
+		pathlib.Path(path).mkdir(parents=True, exist_ok=True)
+		f = open(path+'/'+name.strip()+'.md', 'w')
 		f.write('---'+'\n')
-		f.write('aliases : '+'\n')
-		f.write('- '+bookName+' '+self.number+'\n')
+		f.write('bibleKeys : '+'\n')
+		#f.write('- '+bookName+' '+self.number+'\n')
 		f.write('- '+bookStandardName+' '+self.standard_number+'\n')
 		f.write('- '+bookStandardAbbrev+' '+self.standard_number+'\n')
 		if bookStandardName != bookEnglishName:
@@ -233,6 +235,7 @@ class BibleChapter:
 		f.write('- '+'Bible/'+self.cleanTag(bookStandardAbbrev)+'/'+self.cleanTag(self.standard_number)+'\n')
 		f.write('- '+self.language+'\n')
 		f.write('cssclass : '+self.language+'\n')
+		f.write('direction : '+self.direction+'\n')
 		f.write('---'+'\n\n')
 		f.write('# '+bookName+' '+self.number+'\n\n')
 		for verse in self.verseList:
@@ -246,7 +249,7 @@ class BibleVerse:
 		self.sub_number = sub_number
 		self.verseText = verseText
 
-aelf = Bible("Bible AELF","AELF",False,"français")
-#ref = Bible("Bible AELF","",False,"français")
+aelf = Bible("Bible AELF","AELF",False,"français","ltr")
+#ref = Bible("Bible AELF","",False,"français","ltr")
 
 
